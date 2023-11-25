@@ -21,12 +21,11 @@ const Item = (props: IProps) => {
       <UI.Text open={openGetter}>
         {openGetter ? data.value : data.key}
       </UI.Text>
-      <UI.BtnOpen
-        open={openGetter}
-        onClick={() => { onGoIntoElement(data) }}
-      >
-        show
-      </UI.BtnOpen>
+      {!!onGoIntoElement && (
+        <UI.BtnOpen open={openGetter} onClick={() => { onGoIntoElement(data) }}>
+          show
+        </UI.BtnOpen>
+      )}
     </UI.Wrapper>
   )
 }

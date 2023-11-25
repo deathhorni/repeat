@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from 'react-query'
+import moment from 'moment'
 
 import { queryClient, DEFAULT_ROOT } from './consts'
 import { IItem } from './types'
@@ -94,7 +95,7 @@ export const useAddChildItem = (parentId: string = 'root') => {
   })
 }
 
-export const useSetItem = (id: string) => {
+export const useSetItem = (id: string | null = null) => {
   return useMutation({
     mutationFn: (newItem: IItem) => {
       return new Promise((resolve) => {
@@ -103,7 +104,7 @@ export const useSetItem = (id: string) => {
       })
     },
     mutationKey: `/items/${id}/set`,
-    onSuccess: () => { queryClient.invalidateQueries(`/items/${id}`) },
+    onSuccess: () => { queryClient.invalidateQueries(id === null ? '/items/' : `/items/${id}`) },
   })
 }
 
@@ -126,24 +127,51 @@ export const useDeleteItem = (parentId: string, id: string) => {
   })
 }
 
-/*
-now 0
-20 min 1
-1 hour 2
-9 hours 3
-24 hours 4
-48 hours 5
-6 days 6
-2 weeks 7
-1 month 8
-2 months 9
-6 months 10
-*/
 export const useGetLearningItems = () => {
   return useQuery({
     queryFn: () => {
-      
+      return new Promise<IItem[]>((resolve) => {
+        const items = Object.values(localStorage).map((value) => JSON.parse(value)).filter((value) => {
+          const item: IItem = value
+  
+          if (!item.repeatable) {
+            return false
+          }
+  
+          const now      = moment()
+          const itemTime = moment(item.lastModified)
+  
+          switch (item.repeats) {
+            case 0:
+              return true
+            case 1:
+              return itemTime.add(20, 'minutes').diff(now) < 0
+            case 2:
+              return itemTime.add(1, 'hours').diff(now) < 0
+            case 3:
+              return itemTime.add(9, 'hours').diff(now) < 0
+            case 4:
+              return itemTime.add(1, 'days').diff(now) < 0
+            case 5:
+              return itemTime.add(2, 'days').diff(now) < 0
+            case 6:
+              return itemTime.add(6, 'days').diff(now) < 0
+            case 7:
+              return itemTime.add(2, 'weeks').diff(now) < 0
+            case 8:
+              return itemTime.add(1, 'months').diff(now) < 0
+            case 9:
+              return itemTime.add(2, 'months').diff(now) < 0
+            case 10:
+              return itemTime.add(6, 'months').diff(now) < 0
+            default:
+              return false
+          }
+        }) as IItem[]
+
+        resolve(items)
+      })
     },
-    queryKey: '/items/learning',
+    queryKey: ['/learning', Date.now()],
   })
 }
