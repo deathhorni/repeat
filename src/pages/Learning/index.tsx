@@ -25,6 +25,8 @@ const Learning = (props: IPageProps) => {
   const { data } = useGetLearningItems()
   const { mutateAsync: editItem } = useSetItem()
 
+  console.log('data', data)
+
   if (!data) {
     return null
   }

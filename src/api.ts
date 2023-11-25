@@ -172,6 +172,5 @@ export const useGetLearningItems = () => {
         resolve(items)
       })
     },
-    queryKey: ['/learning', Date.now()],
   })
 }
