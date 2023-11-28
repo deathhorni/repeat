@@ -14,7 +14,7 @@ export const Wrapper = styled.div`
 
 export const Btns = styled.div`
   margin-top: auto;
-  margin-bottom: 60px;
+  margin-bottom: 160px;
   display: flex;
   gap: 8px;
 `
