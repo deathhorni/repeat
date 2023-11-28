@@ -9,23 +9,11 @@ import { IPageProps, IItem } from '../../types'
 
 import * as UI from './ui.styles'
 
-const Redirect = (props: IPageProps) => {
-  const { path, setPage } = props
-
-  useEffect(() => {
-    setPage(path ? 'CurrentItem' : 'Main')
-  }, [])
-
-  return null
-}
-
 const Learning = (props: IPageProps) => {
   const [ currentItemIdx, setCurrentItemIdx ] = useState(0)
 
   const { data } = useGetLearningItems()
   const { mutateAsync: editItem } = useSetItem()
-
-  console.log('data', data)
 
   if (!data) {
     return null
@@ -38,33 +26,35 @@ const Learning = (props: IPageProps) => {
       <Header {...props} />
       <Content>
         <UI.Wrapper>
-          {item ? <Item data={item} /> : <Redirect {...props} />}
-          <UI.BtnsWrapper>
-            <UI.Btn onClick={() => {
-              if (item) {
-                setCurrentItemIdx((prev) => prev + 1)
-                editItem({
-                  ...item,
-                  repeats: item.repeats + 1,
-                  lastModified: new Date().toISOString(),
-                })
-              }
-            }}>
-              I know
-            </UI.Btn>
-            <UI.Btn onClick={() => {
-              if (item) {
-                setCurrentItemIdx((prev) => prev + 1)
-                editItem({
-                  ...item,
-                  repeats: 0,
-                  lastModified: new Date().toISOString(),
-                })
-              }
-            }}>
-              I forgot
-            </UI.Btn>
-          </UI.BtnsWrapper>
+          {item ? <Item data={item} /> : <div>Nothing to learn</div>}
+          {!!item && (
+            <UI.BtnsWrapper>
+              <UI.Btn onClick={() => {
+                if (item) {
+                  setCurrentItemIdx((prev) => prev + 1)
+                  editItem({
+                    ...item,
+                    repeats: item.repeats + 1,
+                    lastModified: new Date().toISOString(),
+                  })
+                }
+              }}>
+                I know
+              </UI.Btn>
+              <UI.Btn onClick={() => {
+                if (item) {
+                  setCurrentItemIdx((prev) => prev + 1)
+                  editItem({
+                    ...item,
+                    repeats: 0,
+                    lastModified: new Date().toISOString(),
+                  })
+                }
+              }}>
+                I forgot
+              </UI.Btn>
+            </UI.BtnsWrapper>
+          )}
         </UI.Wrapper>
       </Content>
       <Footer {...props} />

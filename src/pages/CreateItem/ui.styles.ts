@@ -1,18 +1,20 @@
 import styled from 'styled-components'
 
 import colors from '../../colors'
+import BasedContent from '../../content'
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 300px;
   width: 100%;
   min-width: 300px;
+  min-height: 100%;
 `
 
 export const Btns = styled.div`
-  padding-top: 40px;
+  margin-top: auto;
+  margin-bottom: 60px;
   display: flex;
   gap: 8px;
 `
@@ -29,4 +31,9 @@ export const Btn = styled.button`
   &:disabled {
     opacity: 0.4;
   }
+`
+
+export const Content = styled(BasedContent)`
+  justify-content: flex-start;
+  padding-top: 60px;
 `

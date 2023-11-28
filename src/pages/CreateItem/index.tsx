@@ -1,4 +1,3 @@
-import Content from '../../content'
 import Footer from '../../footer'
 import useIItemForm from '../../forms/useIItemForm'
 import Header from '../../header'
@@ -17,7 +16,7 @@ const CreateItem = (props: IPageProps) => {
   return (
     <div>
       <Header {...props} />
-      <Content>
+      <UI.Content>
         <UI.Wrapper>
           {contextHolder.key}
           {contextHolder.value}
@@ -39,7 +38,7 @@ const CreateItem = (props: IPageProps) => {
             <UI.Btn onClick={returnDefaultPage}>Cancel</UI.Btn>
           </UI.Btns>
         </UI.Wrapper>
-      </Content>
+      </UI.Content>
       <Footer {...props} />
     </div>
   )
