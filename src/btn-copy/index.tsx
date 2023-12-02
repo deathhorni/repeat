@@ -9,7 +9,7 @@ const BtnCopy = () => {
     <UI.Wrapper>
       <UI.Btn onClick={() => {
         const link = document.createElement('a')
-        const file = new Blob([ JSON.stringify(localStorage) ], { type: 'text/plain;charset=utf-8' })
+        const file = new Blob([ encodeURIComponent(JSON.stringify(localStorage)) ], { type: 'text/plain;charset=utf-8' })
 
         link.href = URL.createObjectURL(file)
         link.download = 'memory_app_data.txt'
@@ -34,7 +34,7 @@ const BtnCopy = () => {
 
                   Array.from(uInt8Array).forEach((charCode) => { str += String.fromCharCode(charCode) })
 
-                  const obj = JSON.parse(str)
+                  const obj = JSON.parse(decodeURIComponent(str))
 
                   Object.entries(obj).forEach((entry) => {
                     const [ key, value ] = entry
