@@ -12,7 +12,6 @@ export const Wrapper = styled.div<IWrapperProps>`
   border: 1px solid ${colors.dark};
   border-radius: 6px;
   width: 100%;
-  min-height: 50px;
   padding: 4px;
   display: flex;
   justify-content: space-between;
