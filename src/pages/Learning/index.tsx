@@ -26,7 +26,7 @@ const Learning = (props: IPageProps) => {
       <Header {...props} />
       <Content>
         <UI.Wrapper>
-          {item ? <Item data={item} /> : <div>Nothing to learn</div>}
+          {item ? <Item key={currentItemIdx} data={item} /> : <div>Nothing to learn</div>}
           {!!item && (
             <UI.BtnsWrapper>
               <UI.Btn onClick={() => {
