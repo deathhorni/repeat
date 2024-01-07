@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { v4 as uuidv4 } from 'uuid'
 
 import { IItem } from '../../types'
 import { DEFAULT_ITEM } from '../../consts'
@@ -28,7 +27,7 @@ const useIItemForm = (prev: IItem | null = null) => {
           repeats: annulateRepeatsGetter ? 0 : formDataGetter.repeats,
         } : {
           ...formDataGetter,
-          id: uuidv4(),
+          id: Date.now() + '',
           lastModified: newLastModified,
           repeatable: hasValue ? formDataGetter.repeatable : false,
         }
